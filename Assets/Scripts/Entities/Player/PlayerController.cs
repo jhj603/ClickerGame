@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
         {
             attacking = true;
             animator.SetTrigger("Attack");
+
+            GameManager.Instance.CurrentEnemy.Condition.ChangeHealth(-stats.CurrentStat.attackData.power);
+
             StartCoroutine(CanAttack());
 
             return true;

@@ -25,10 +25,17 @@ public class UIManager : Singleton<UIManager>
         playerCondition = GameManager.Instance.Player.Condition;
         playerStat = GameManager.Instance.Player.GetComponent<CharacterStatsHandler>();
 
+        enemyCondition = GameManager.Instance.CurrentEnemy.Condition;
+        enemyStat = GameManager.Instance.CurrentEnemy.GetComponent<CharacterStatsHandler>();
+
         playerCondition.OnDamage += UpdatePlayerHPUI;
         playerCondition.OnHeal += UpdatePlayerHPUI;
 
+        enemyCondition.OnDamage += UpdateEnemyHPUI;
+        enemyCondition.OnHeal += UpdateEnemyHPUI;
+
         UpdatePlayerHPUI();
+        UpdateEnemyHPUI();
     }
 
     private void Update()
@@ -45,7 +52,9 @@ public class UIManager : Singleton<UIManager>
 
     private void UpdateEnemyHPUI()
     {
-        //enemyHPGauge.value = 
+        enemyHPGauge.value = enemyCondition.CurrentHP / enemyStat.CurrentStat.maxHealth;
+
+        enemyHPText.text = $"{enemyCondition.CurrentHP} / {enemyStat.CurrentStat.maxHealth}";
     }
 
     public void OnAutoAttack()
